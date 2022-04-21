@@ -24,9 +24,9 @@ namespace Repositories
             }
         }
 
-        public List<GolfCourse> GetClubs()
+        public List<GolfClub> GetClubs()
         {
-
+            return _clubDbContext;
         }
     }
 }

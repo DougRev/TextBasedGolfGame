@@ -8,17 +8,18 @@ namespace Repositories
 {
     public class GolfClub
     {
-        public GolfClub(int driver = 225, int threeWood = 200, int fiveIron = 185)
+        public GolfClub()
         {
-           int Driver = driver;
-           int ThreeWood = threeWood;
-           int FiveIron = fiveIron;
+
         }
 
-        public string Driver { get; set; }
-        public string ThreeWood { get; set; }
-        public string FiveIron { get; set; }
-    }
+        public GolfClub(string type, int distance)
+        {
+            Type = type;
+            Distance = distance;
+        }
 
-    
+        public string Type { get; set; }
+        public int Distance { get; set; }
+    }
 }

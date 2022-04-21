@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,16 @@ namespace Repositories
 
         }
 
-        public GolfCourse(string courseName, int holes = 0, int totalDist = 0, int parTotal = 0)
+        public GolfCourse(string courseName, List<Hole> holeList, int totalDist = 0, int parTotal = 0)
         {
             CourseName = courseName;
-            Holes = holes;
+            List<Hole> holesList = new List<Hole>();
             TotalDistance = totalDist;
             ParTotal = parTotal;
         }
 
         public string CourseName { get; set; }
-        public int Holes { get; set;}
+        public List<Hole> HoleList { get; set; } = new List<Hole>();
         public int TotalDistance { get; set; }
         public int ParTotal { get; set;}
 
