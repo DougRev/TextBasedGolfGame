@@ -157,14 +157,9 @@ namespace Golf_Game
             string userInput = Console.ReadLine();
             if (userInput.ToLower() == "cool lake")
             {
-                StartRound();
+                StartRound(userInput);
             }
            
-        }
-
-        private void StartRound()
-        {
-            Console.WriteLine($"You approach the {}");
         }
 
         private void ViewGolfClubs(GolfClub club)
@@ -191,10 +186,12 @@ namespace Golf_Game
             Console.WriteLine($"Distance: {course.TotalDistance}");
         }
 
-        private void StartRound(GolfCourse course)
+        private void StartRound(string course)
         {
             Console.Clear();
-            Console.WriteLine($"You approach the Hole 1 tee box. It is a Par {hole.} ");
+            GolfCourse courseName = _cRepo.GetCourseByName(course);
+            Console.WriteLine($"Welcome to {courseName.CourseName}!");
+            Console.WriteLine($"You approach the Hole 1 tee box. It is a Par{courseName.HoleList} ");
             
         }
 
