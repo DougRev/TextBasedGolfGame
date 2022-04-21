@@ -67,6 +67,7 @@ namespace Repositories
             }
               return false;
         }
+
         public bool AddHoleToDatabase(Hole hole)
         {
             if (hole == null)

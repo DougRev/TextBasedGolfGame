@@ -28,5 +28,17 @@ namespace Repositories
         {
             return _clubDbContext;
         }
+
+        public GolfClub GetClub(string type)
+        {
+            foreach (var club in _clubDbContext)
+            {
+                if (club.Type == type)
+                {
+                    return club;
+                }
+            }
+            return null;
+        }
     }
 }

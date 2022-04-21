@@ -2,9 +2,6 @@
 using Repositories.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Golf_Game
 {
@@ -34,6 +31,7 @@ namespace Golf_Game
                     "3. Delete Character \n" +
                     "4. Create Hole \n" +
                     "5. View All Courses \n" +
+                    "6. Start A Round \n" +
                     "99. Close Application");
                 string charChoice = Console.ReadLine();
                 switch (charChoice)
@@ -53,6 +51,9 @@ namespace Golf_Game
                     case "5":
                         ViewCourses();
                         break;
+                    case "6":
+                        StartRound();
+                        break;
                     case "99":
                         isRunning = false;
                         break;
@@ -62,6 +63,11 @@ namespace Golf_Game
 
                 }
             }
+        }
+
+        private void StartRound()
+        {
+            CoolLake();
         }
 
         private void ViewCourses()
@@ -181,25 +187,103 @@ namespace Golf_Game
             _courseRepo.GetCourseByName(choice);
             if (choice.ToLower() == "cool lake")
             {
-                Console.WriteLine("YUP");
+                CoolLake();
             }
            
         }
 
-        private void ViewGolfClubs(GolfClub club)
+        private void CoolLake()
         {
             Console.Clear();
+            int distHit = 0;
+            GolfCourse coolLake = _courseRepo.GetCourseById(1);
+            Console.WriteLine("------------Welcome to Cool Lake Golf Course here in Lebanon, Indiana!-----");
+            Console.ReadKey();
+            Hole hole1 = coolLake.HoleList[0];
+            int distRemain = coolLake.HoleList[0].Distance - distHit;
+            while (distRemain > 0)
+            {
+                ViewHoleDetails(hole1);
+                Console.ReadKey();
+                PlayHole(hole1);
+            }
+        }
+
+        private void PlayHole(Hole hole)
+        {
+            int distHit = 0;
+            int distRemain = hole.Distance - distHit;
+            GolfClub golfClub = new GolfClub();
+            Console.WriteLine($"You approach Hole:{hole.Number} teebox. Distance is {hole.Distance}");
+            Console.ReadKey();
+            while(distRemain > 0)
+            {
+                ViewHoleDetails(hole);
+                ViewGolfClubs();
+                Menu(hole);
+            }
+        }
+
+        private void Menu(Hole hole)
+        {
+            System.Random random = new System.Random();
+            int distHit = 0;
+            int distRemain = hole.Distance - distHit;
+            int stroke = 0;
+            Console.Write("| Enter Club Choice | or | Look in your (B)ag |");
+            string userInput = Console.ReadLine().ToLower();
+            if (userInput == "b")
+            {
+                ViewGolfClubs();
+                Console.ReadKey();
+            }
+            else if (userInput == "d")
+            {
+              if (stroke == 0)
+                {
+                    //this still needs to find a way to factor in player stats like strength
+                    int power = random.Next(5, 10);
+                    GolfClub club = _clubRepo.GetClub("driver");
+                    int distance = club.Distance + power;
+
+                    Console.WriteLine("You step up and aboslutely crush your drive down the middle of the fairway");
+                }
+            }
+            else if (userInput == "5")
+            {
+
+            }
+            else if (userInput == "3w")
+            {
+
+            }
+            else
+            {
+                Console.WriteLine("You must choose a valid option. Look in your Bag for correct Keys.");
+            }
+        }
+
+        private void ViewGolfClubs()
+        {
             List<GolfClub> clubList = _clubRepo.GetClubs();
-            foreach (var player in clubList)
+            foreach (var club in clubList)
             {
                 ViewClubDetails(club);
             }
+
             Console.ReadKey();
         }
         private void ViewClubDetails(GolfClub club)
         {
             Console.WriteLine($"Type:    | {club.Type}     |");
             Console.WriteLine($"Distance:| {club.Distance} |");
+        }
+
+        private void ViewHoleDetails(Hole hole)
+        {
+            Console.WriteLine($"|  Hole Number: {hole.Number}   |");
+            Console.WriteLine($"|     Distance: {hole.Distance} |");
+            Console.WriteLine($"|          Par: {hole.Par}    |");
         }
 
         private void ViewCourseDetails(GolfCourse course)
@@ -214,25 +298,36 @@ namespace Golf_Game
         private void SeedContent()
         {
             GolfCourse coolLake = new GolfCourse();
+            coolLake.Id = 1;
             coolLake.CourseName = "Cool Lake";
             coolLake.TotalDistance = 2600;
             coolLake.ParTotal = 72;
-
             _courseRepo.AddCourseToDatabase(coolLake);
 
+            Hole hole = new Hole();
+            hole.Number = 1;
+            hole.Par = 4;
+            hole.Distance = 260;
+            _courseRepo.AddHoleToDatabase(hole);
+            _courseRepo.AssignHole(1, hole);
+
             GolfClub golfClub = new GolfClub();
-            golfClub.Type = "Driver";
+            golfClub.Type = "driver";
             golfClub.Distance = 225;
 
             GolfClub golfClub1 = new GolfClub();
-            golfClub1.Type = "3 Wood";
+            golfClub1.Type = "3 wood";
             golfClub1.Distance = 200;
 
             GolfClub golfClub2 = new GolfClub();
-            golfClub2.Type = "5 Iron";
+            golfClub2.Type = "5 iron";
             golfClub2.Distance = 185;
 
             _clubRepo.AddClubToDatabase(golfClub);
+            _clubRepo.AddClubToDatabase(golfClub1);
+            _clubRepo.AddClubToDatabase(golfClub2);
         }
+
+
     }
 }

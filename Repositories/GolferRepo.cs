@@ -30,6 +30,18 @@ namespace Repositories
             return _golferDbContext;
         }
 
+        public Player GetGolferByName(string name)
+        {
+            foreach (var player in _golferDbContext)
+            {
+                if (player.Name == name)
+                {
+                    return player;
+                }
+            }
+            return null;
+        }
+
         
 
         public bool RemoveGolfer(string name)
