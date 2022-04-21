@@ -10,9 +10,10 @@ namespace Golf_Game
 {
     public class PlayerUI
     {
-        private readonly GolferRepo _gRepo = new GolferRepo();
-        private readonly GolfCourseRepo _cRepo = new GolfCourseRepo();
+        private readonly GolferRepo _golferRepo = new GolferRepo();
+        private readonly GolfCourseRepo _courseRepo = new GolfCourseRepo();
         private readonly GolfClubsRepo _clubRepo = new GolfClubsRepo();
+        private readonly GolfClubsRepo _holeRepo = new GolfClubsRepo();
 
         public void Run()
         {
@@ -31,6 +32,8 @@ namespace Golf_Game
                     "1. New Character \n" +
                     "2. See All Characters \n" +
                     "3. Delete Character \n" +
+                    "4. Create Hole \n" +
+                    "5. View All Courses \n" +
                     "99. Close Application");
                 string charChoice = Console.ReadLine();
                 switch (charChoice)
@@ -47,6 +50,9 @@ namespace Golf_Game
                     case "4":
                         CreateHole();
                         break;
+                    case "5":
+                        ViewCourses();
+                        break;
                     case "99":
                         isRunning = false;
                         break;
@@ -56,6 +62,17 @@ namespace Golf_Game
 
                 }
             }
+        }
+
+        private void ViewCourses()
+        {
+            Console.Clear();
+            List<GolfCourse> courseList = _courseRepo.GetCourses();
+            foreach (var course in courseList)
+            {
+                ViewCourseDetails(course);
+            }
+            Console.ReadKey();
         }
 
         private void CreateHole()
@@ -68,23 +85,29 @@ namespace Golf_Game
             hole.Distance = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("What is the par?");
             hole.Par = Convert.ToInt32(Console.ReadLine());
-            Console.Clear();
 
-            List<GolfCourse> coursesInDb = _cRepo.GetCourses();
-            foreach (var course in coursesInDb)
-            {
-                ViewCourseDetails(course);
-            }
-            Console.WriteLine("Which Course is this being added to?");
-            string courseChoice = Console.ReadLine();
-            bool success = _cRepo.AssignHole(courseChoice, hole);
+            bool success = _courseRepo.AddHoleToDatabase(hole);
             if (success)
             {
-                Console.WriteLine($" | Hole: {hole.Number} has been added to {courseChoice}");
+                Console.WriteLine($"Hole has been succesfully added to the database");
+
             }
             else
             {
-                Console.WriteLine("FAILED");
+                Console.WriteLine("Hole was not added. Try again.");
+            }
+            Console.WriteLine("What is the Course ID?");
+            int id = Convert.ToInt32(Console.ReadLine());
+            _courseRepo.GetCourseById(id);
+
+            bool success2 = _courseRepo.AssignHole(id, hole);
+            if (success2)
+            {
+                Console.WriteLine("Hole has been assigned!");
+            }
+            else
+            {
+                Console.WriteLine("Hole was NOT assigned.");
             }
             Console.ReadKey();
         }
@@ -92,7 +115,7 @@ namespace Golf_Game
         private void SeeAllGolfers()
         {
             Console.Clear();
-            List<Player> playerList = _gRepo.GetGolfers();
+            List<Player> playerList = _golferRepo.GetGolfers();
             foreach (var player in playerList)
             {
                 ViewPlayerDetails(player);
@@ -116,7 +139,7 @@ namespace Golf_Game
             Console.WriteLine("*NEW GAME*\n" +
                 "What is your characters name?");
             player.Name = Console.ReadLine();
-            bool success = _gRepo.AddGolferToDatabase(player);
+            bool success = _golferRepo.AddGolferToDatabase(player);
 
             if (success)
             {
@@ -134,7 +157,7 @@ namespace Golf_Game
             Console.Clear();
             Console.WriteLine("Please enter the Golfer's Name");
             string playerName = Console.ReadLine();
-            bool success = _gRepo.RemoveGolfer(playerName);
+            bool success = _golferRepo.RemoveGolfer(playerName);
             if (success)
             {
                 Console.WriteLine("SUCCESS");
@@ -148,16 +171,17 @@ namespace Golf_Game
 
         private void ChooseCourse()
         {
-            List<GolfCourse> coursesInDb = _cRepo.GetCourses();
+            List<GolfCourse> coursesInDb = _courseRepo.GetCourses();
             foreach (var course in coursesInDb)
             {
                 ViewCourseDetails(course);
             }
             Console.WriteLine("Choose a course:");
-            string userInput = Console.ReadLine();
-            if (userInput.ToLower() == "cool lake")
+            string choice = Console.ReadLine();
+            _courseRepo.GetCourseByName(choice);
+            if (choice.ToLower() == "cool lake")
             {
-                StartRound(userInput);
+                Console.WriteLine("YUP");
             }
            
         }
@@ -180,19 +204,11 @@ namespace Golf_Game
 
         private void ViewCourseDetails(GolfCourse course)
         {
+            Console.WriteLine($"ID: {course.Id}");
             Console.WriteLine($"Name: {course.CourseName}");
-            Console.WriteLine($"Holes: {course.HoleList}");
+            Console.WriteLine($"Holes: {course.HoleList.Count}");
             Console.WriteLine($"Par: {course.ParTotal}");
             Console.WriteLine($"Distance: {course.TotalDistance}");
-        }
-
-        private void StartRound(string course)
-        {
-            Console.Clear();
-            GolfCourse courseName = _cRepo.GetCourseByName(course);
-            Console.WriteLine($"Welcome to {courseName.CourseName}!");
-            Console.WriteLine($"You approach the Hole 1 tee box. It is a Par{courseName.HoleList} ");
-            
         }
 
         private void SeedContent()
@@ -202,7 +218,7 @@ namespace Golf_Game
             coolLake.TotalDistance = 2600;
             coolLake.ParTotal = 72;
 
-            _cRepo.AddCourseToDatabase(coolLake);
+            _courseRepo.AddCourseToDatabase(coolLake);
 
             GolfClub golfClub = new GolfClub();
             golfClub.Type = "Driver";

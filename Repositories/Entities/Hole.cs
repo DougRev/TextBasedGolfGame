@@ -13,15 +13,16 @@ namespace Repositories.Entities
 
         }
 
-        public Hole(int number, int par, int distance)
+        public Hole(int number, int par, int distance, GolfCourse golfCourse)
         {
             Number = number;
             Par = par;
             Distance = distance;
+            GolfCourse = golfCourse;
         }
-
         public int Number { get; set; }
         public int Par { get; set; }
         public int Distance { get; set; }
+        public GolfCourse GolfCourse { get; set; }
     }
 }

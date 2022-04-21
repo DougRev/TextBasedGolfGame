@@ -14,14 +14,15 @@ namespace Repositories
 
         }
 
-        public GolfCourse(string courseName, List<Hole> holeList, int totalDist = 0, int parTotal = 0)
+        public GolfCourse(int id, string courseName, List<Hole> holeList, int totalDist = 0, int parTotal = 0)
         {
+            Id = id;
             CourseName = courseName;
             List<Hole> holesList = new List<Hole>();
             TotalDistance = totalDist;
             ParTotal = parTotal;
         }
-
+        public int Id { get; set; }
         public string CourseName { get; set; }
         public List<Hole> HoleList { get; set; } = new List<Hole>();
         public int TotalDistance { get; set; }

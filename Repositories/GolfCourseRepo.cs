@@ -44,6 +44,17 @@ namespace Repositories
             return null;
         }
 
+        public GolfCourse GetCourseById(int id)
+        {
+            foreach (var course in _courseDbContext)
+            {
+                if (course.Id == id)
+                {
+                    return course;
+                }
+            }
+            return null;
+        }
         public bool RemoveCourse(string courseName)
         {
             foreach (var course in _courseDbContext)
@@ -56,15 +67,29 @@ namespace Repositories
             }
               return false;
         }
-
-        public bool AssignHole(string courseName, Hole hole)
+        public bool AddHoleToDatabase(Hole hole)
         {
-            var course = GetCourseByName(courseName);
+            if (hole == null)
+            {
+                return false;
+            }
+            else
+            {
+                _count++;
+                _holeDbContext.Add(hole);
+                return true;
+            }
+        }
+
+        public bool AssignHole(int id, Hole hole)
+        {
+            var course = GetCourseById(id);
             if (course != null)
             {
                 course.HoleList.Add(hole);
+                return true;
             }
-            return false;
+            else return false;
         }
     }
 }
