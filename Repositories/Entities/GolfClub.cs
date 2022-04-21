@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public class GolfTools
+    public class GolfClub
     {
-        public GolfTools(string driver, string threeWood, string fiveIron)
+        public GolfClub(int driver = 225, int threeWood = 200, int fiveIron = 185)
         {
-            Driver = driver;
-            ThreeWood = threeWood;
-            FiveIron = fiveIron;
+           int Driver = driver;
+           int ThreeWood = threeWood;
+           int FiveIron = fiveIron;
         }
 
         public string Driver { get; set; }

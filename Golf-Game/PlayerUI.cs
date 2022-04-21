@@ -11,6 +11,7 @@ namespace Golf_Game
     {
         private readonly GolferRepo _gRepo = new GolferRepo();
         private readonly GolfCourseRepo _cRepo = new GolfCourseRepo();
+        private readonly GolfClubsRepo _clubRepo = new GolfClubsRepo();
 
         public void Run()
         {
@@ -29,7 +30,7 @@ namespace Golf_Game
                     "1. New Character \n" +
                     "2. See All Characters \n" +
                     "3. Delete Character \n" +
-                    "4. Close Application");
+                    "99. Close Application");
                 string charChoice = Console.ReadLine();
                 switch (charChoice)
                 {
@@ -42,7 +43,7 @@ namespace Golf_Game
                     case "3":
                         DeleteCharacter();
                         break;
-                    case "4":
+                    case "99":
                         isRunning = false;
                         break;
                     default:
@@ -85,6 +86,7 @@ namespace Golf_Game
             if (success)
             {
                 Console.WriteLine($"{player.Name} has been added to the database.");
+                ChooseCourse();
             }
             else
             {
@@ -111,23 +113,43 @@ namespace Golf_Game
 
         private void ChooseCourse()
         {
+            List<GolfCourse> coursesInDb = _cRepo.GetCourses();
+            foreach (var course in coursesInDb)
+            {
+                ViewCourseDetails(course);
+            }
             Console.WriteLine("Choose a course:");
-            List<GolfCourse> courseChoices = _cRepo.GetCourses();
-            Console.WriteLine(courseChoices);
             string userInput = Console.ReadLine();
-            if (userInput == "cool lake")
+            if (userInput.ToLower() == "cool lake")
             {
                 StartRound();
             }
+           
+        }
 
+        private void ViewGolfClubs(GolfClub club)
+        {
+            Console.Clear();
+            List<GolfClub> clubList = _clubRepo.GetClubs();
+            foreach (var player in clubList)
+            {
+                ViewPlayerDetails(club);
+            }
+            Console.ReadKey();
+        }
 
-            
-            
+        private void ViewCourseDetails(GolfCourse course)
+        {
+            Console.WriteLine($"Name: {course.CourseName}");
+            Console.WriteLine($"Holes: {course.Holes}");
+            Console.WriteLine($"Par: {course.ParTotal}");
+            Console.WriteLine($"Distance: {course.TotalDistance}");
         }
 
         private void StartRound()
         {
-           
+            Console.WriteLine("Fuck Yes");
+            
         }
 
         private void SeedContent()

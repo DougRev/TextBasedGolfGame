@@ -43,8 +43,9 @@
   <ItemGroup>
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\GolfCourse.cs" />
+    <Compile Include="GolfClubsRepo.cs" />
     <Compile Include="GolfCourseRepo.cs" />
-    <Compile Include="GolfTools.cs" />
+    <Compile Include="Entities\GolfClub.cs" />
     <Compile Include="GolferRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
