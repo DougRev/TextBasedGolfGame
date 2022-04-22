@@ -13,8 +13,9 @@ namespace Repositories
 
         }
 
-        public Player(string name, int strength = 0, int accuracy = 0, int stamina = 0, int handicap = 0, int holesPlayed = 0)
+        public Player(string name, int id, int strength = 0, int accuracy = 0, int stamina = 0, int handicap = 0, int holesPlayed = 0)
         {
+            Id = id;
             Name = name;
             Strength = strength;
             Accuracy = accuracy;
@@ -22,6 +23,8 @@ namespace Repositories
             Handicap = handicap;
             HolesPlayed = holesPlayed;
         }
+        
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Strength { get; set; }
         public int Accuracy { get; set; }

@@ -30,11 +30,11 @@ namespace Repositories
             return _golferDbContext;
         }
 
-        public Player GetGolferByName(string name)
+        public Player GetGolferById(int id)
         {
             foreach (var player in _golferDbContext)
             {
-                if (player.Name == name)
+                if (player.Id == id)
                 {
                     return player;
                 }

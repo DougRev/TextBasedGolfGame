@@ -15,12 +15,12 @@ namespace Golf_Game
         public void Run()
         {
             SeedContent();
-            RunApplication();
+            MainMenu();
         }
 
        
 
-        private void RunApplication()
+        private void MainMenu()
         {
             bool isRunning = true;
             while (isRunning)
@@ -31,7 +31,7 @@ namespace Golf_Game
                     "3. Delete Character \n" +
                     "4. Create Hole \n" +
                     "5. View All Courses \n" +
-                    "6. Start A Round \n" +
+                    "6. New Game \n" +
                     "99. Close Application");
                 string charChoice = Console.ReadLine();
                 switch (charChoice)
@@ -52,7 +52,7 @@ namespace Golf_Game
                         ViewCourses();
                         break;
                     case "6":
-                        StartRound();
+                        NewGame();
                         break;
                     case "99":
                         isRunning = false;
@@ -65,9 +65,40 @@ namespace Golf_Game
             }
         }
 
-        private void StartRound()
+        private void NewGame()
         {
-            CoolLake();
+            Console.WriteLine("1. Choose a character \n" +
+                "99. Go Back");
+            string userInput = Console.ReadLine();
+            switch (userInput)
+            {
+                case "1":
+                    ChooseCharacter();
+                    break;
+                case "99":
+                    MainMenu();
+                    break;
+                default:
+                    Console.WriteLine("Please choose a number between 1 or 99.");
+                    break;
+
+            }
+        }
+
+        private void ChooseCharacter()
+        {
+            Console.Clear();
+            SeeAllGolfers();
+            Console.WriteLine("Choose your Golfer and enter their ID");
+            int userInput = Convert.ToInt32(Console.ReadLine());
+            Player playerChoice = _golferRepo.GetGolferById(userInput);
+            StartRound(playerChoice);
+            
+        }
+
+        private void StartRound(Player player)
+        {
+            ChooseCourse(player);
         }
 
         private void ViewCourses()
@@ -127,10 +158,12 @@ namespace Golf_Game
                 ViewPlayerDetails(player);
             }
             Console.ReadKey();
+            
         }
 
         private void ViewPlayerDetails(Player player)
         {
+            Console.WriteLine($"ID: {player.Id}");
             Console.WriteLine($"Name:{player.Name}");
             Console.WriteLine($"Strength:{player.Strength}");
             Console.WriteLine($"Accuracy:{player.Accuracy}");
@@ -150,7 +183,7 @@ namespace Golf_Game
             if (success)
             {
                 Console.WriteLine($"{player.Name} has been added to the database.");
-                ChooseCourse();
+                ChooseCourse(player);
             }
             else
             {
@@ -175,7 +208,7 @@ namespace Golf_Game
             Console.ReadKey();
         }
 
-        private void ChooseCourse()
+        private void ChooseCourse(Player player)
         {
             List<GolfCourse> coursesInDb = _courseRepo.GetCourses();
             foreach (var course in coursesInDb)
@@ -187,48 +220,32 @@ namespace Golf_Game
             _courseRepo.GetCourseByName(choice);
             if (choice.ToLower() == "cool lake")
             {
-                CoolLake();
+                CoolLake(player);
             }
            
         }
 
-        private void CoolLake()
+        private void CoolLake(Player player)
         {
             Console.Clear();
-            int distHit = 0;
-            GolfCourse coolLake = _courseRepo.GetCourseById(1);
             Console.WriteLine("------------Welcome to Cool Lake Golf Course here in Lebanon, Indiana!-----");
+            GolfCourse coolLake = _courseRepo.GetCourseById(1);
             Console.ReadKey();
             Hole hole1 = coolLake.HoleList[0];
+            int distHit = 0;
             int distRemain = coolLake.HoleList[0].Distance - distHit;
+            ViewHoleDetails(hole1);
+            Console.ReadKey();
             while (distRemain > 0)
             {
-                ViewHoleDetails(hole1);
-                Console.ReadKey();
-                PlayHole(hole1);
+                PlayHole(player, hole1);
             }
         }
 
-        private void PlayHole(Hole hole)
+        private void PlayHole(Player player, Hole hole)
         {
-            int distHit = 0;
-            int distRemain = hole.Distance - distHit;
-            GolfClub golfClub = new GolfClub();
-            Console.WriteLine($"You approach Hole:{hole.Number} teebox. Distance is {hole.Distance}");
-            Console.ReadKey();
-            while(distRemain > 0)
-            {
-                ViewHoleDetails(hole);
-                ViewGolfClubs();
-                Menu(hole);
-            }
-        }
-
-        private void Menu(Hole hole)
-        {
-            System.Random random = new System.Random();
-            int distHit = 0;
-            int distRemain = hole.Distance - distHit;
+            Random random = new Random();
+            int distance = hole.Distance;
             int stroke = 0;
             Console.Write("| Enter Club Choice | or | Look in your (B)ag |");
             string userInput = Console.ReadLine().ToLower();
@@ -239,30 +256,30 @@ namespace Golf_Game
             }
             else if (userInput == "d")
             {
-              if (stroke == 0)
+                if (stroke == 0)
                 {
-                    //this still needs to find a way to factor in player stats like strength
-                    int power = random.Next(5, 10);
-                    GolfClub club = _clubRepo.GetClub("driver");
-                    int distance = club.Distance + power;
-
-                    Console.WriteLine("You step up and aboslutely crush your drive down the middle of the fairway");
+                    int quality = random.Next(5, 10) + player.Strength;
+                    int strength = player.Strength;
+                    GolfClub club = _clubRepo.GetClubByType("driver");
+                    int power = club.Distance;
+                    int distanceHit = quality + power + strength;
+                    int distRemain = hole.Distance - distanceHit;
+                    Console.WriteLine($"You step up and aboslutely crush your drive {distanceHit} yards down the middle of the fairway. You have {distRemain} left to the pin.");
                 }
             }
             else if (userInput == "5")
             {
-
+                GoodShotMid(player, hole, "5wood");
             }
-            else if (userInput == "3w")
+            else if (userInput == "3")
             {
-
+                GoodShotMid(player, hole, "3wood");
             }
             else
             {
                 Console.WriteLine("You must choose a valid option. Look in your Bag for correct Keys.");
             }
         }
-
         private void ViewGolfClubs()
         {
             List<GolfClub> clubList = _clubRepo.GetClubs();
@@ -295,6 +312,19 @@ namespace Golf_Game
             Console.WriteLine($"Distance: {course.TotalDistance}");
         }
 
+        public void GoodShotMid(Player player, Hole hole,string type)
+        {
+            Random random = new Random();
+            GolfClub club = _clubRepo.GetClubByType(type);
+            int quality = random.Next(5, 10) + player.Strength;
+            int strength = player.Strength;
+            //throws error below
+            int power = club.Distance;
+            int distanceHit = quality + power + strength;
+            int distRemain = hole.Distance - distanceHit;
+            Console.WriteLine($"You step up and aboslutely crush your drive {distanceHit} yards down the middle of the fairway. You have {distRemain} left to the pin.");
+        }
+
         private void SeedContent()
         {
             GolfCourse coolLake = new GolfCourse();
@@ -310,6 +340,16 @@ namespace Golf_Game
             hole.Distance = 260;
             _courseRepo.AddHoleToDatabase(hole);
             _courseRepo.AssignHole(1, hole);
+
+            Player player = new Player();
+            player.Id = 1;
+            player.Name = "DJ";
+            player.Strength = 0;
+            player.Accuracy = 0;
+            player.Stamina = 0;
+            player.Handicap = 0;
+            player.HolesPlayed = 0;
+            _golferRepo.AddGolferToDatabase(player);
 
             GolfClub golfClub = new GolfClub();
             golfClub.Type = "driver";
