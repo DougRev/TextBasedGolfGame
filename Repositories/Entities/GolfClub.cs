@@ -13,13 +13,13 @@ namespace Repositories
 
         }
 
-        public GolfClub(string type, int distance)
+        public GolfClub(string name, int distance)
         {
-            Type = type;
+            Name = name;
             Distance = distance;
         }
 
-        public string Type { get; set; }
+        public string Name { get; set; }
         public int Distance { get; set; }
     }
 }

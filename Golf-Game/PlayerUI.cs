@@ -235,6 +235,7 @@ namespace Golf_Game
             int distHit = 0;
             int distRemain = coolLake.HoleList[0].Distance - distHit;
             ViewHoleDetails(hole1);
+            Console.WriteLine($"Distance Remaining: {distRemain}");
             Console.ReadKey();
             while (distRemain > 0)
             {
