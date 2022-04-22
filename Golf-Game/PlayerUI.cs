@@ -293,7 +293,7 @@ namespace Golf_Game
         }
         private void ViewClubDetails(GolfClub club)
         {
-            Console.WriteLine($"Type:    | {club.Type}     |");
+            Console.WriteLine($"Type:    | {club.Name}     |");
             Console.WriteLine($"Distance:| {club.Distance} |");
         }
 
@@ -353,15 +353,15 @@ namespace Golf_Game
             _golferRepo.AddGolferToDatabase(player);
 
             GolfClub golfClub = new GolfClub();
-            golfClub.Type = "driver";
+            golfClub.Name = "driver";
             golfClub.Distance = 225;
 
             GolfClub golfClub1 = new GolfClub();
-            golfClub1.Type = "3 wood";
+            golfClub1.Name = "3 wood";
             golfClub1.Distance = 200;
 
             GolfClub golfClub2 = new GolfClub();
-            golfClub2.Type = "5 iron";
+            golfClub2.Name = "5 iron";
             golfClub2.Distance = 185;
 
             _clubRepo.AddClubToDatabase(golfClub);

@@ -29,11 +29,11 @@ namespace Repositories
             return _clubDbContext;
         }
 
-        public GolfClub GetClubByType(string type)
+        public GolfClub GetClubByType(string name)
         {
             foreach (var club in _clubDbContext)
             {
-                if (club.Type == type)
+                if (club.Name == name)
                 {
                     return club;
                 }
