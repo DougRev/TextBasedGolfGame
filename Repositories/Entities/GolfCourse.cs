@@ -18,7 +18,7 @@ namespace Repositories
         {
             Id = id;
             CourseName = courseName;
-            List<Hole> holesList = new List<Hole>();
+            HoleList = holeList;
             TotalDistance = totalDist;
             ParTotal = parTotal;
         }
