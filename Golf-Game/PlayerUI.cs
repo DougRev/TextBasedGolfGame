@@ -238,8 +238,9 @@ namespace Golf_Game
             ViewHoleDetails(hole);
             int distHit = 0;
             int stroke = 0;
+            int distRemaining = 260;
             int distance = hole.Distance;
-            int distRemaining = distance - distHit;
+            distRemaining = distance - distHit;
             while (distHit != hole.Distance)
             {
                 Console.WriteLine($"Distance Remaining:{distRemaining}");
@@ -262,6 +263,7 @@ namespace Golf_Game
                         int distRemaining1 = hole.Distance - distHit1;
                         Console.WriteLine($"Good shot {distHit1} yards down the middle of the fairway. You have {distRemaining1} left to the pin.");
                         distHit += distHit1;
+                        distRemaining = distRemaining1;
                     }
                     else
                     {
