@@ -24,5 +24,7 @@ namespace Repositories.Entities
         public int Par { get; set; }
         public int Distance { get; set; }
         public GolfCourse GolfCourse { get; set; }
+        public int DistanceRemaining { get; set; }
+        public int Strokes { get; set; }
     }
 }
