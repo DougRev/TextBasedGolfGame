@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,9 +31,7 @@ namespace Repositories
         public int Accuracy { get; set; }
         public int Stamina { get; set; } 
         public int Handicap { get; set; }
-        public int HolesPlayed { get; set; }
-       
-
+        public int HolesPlayed { get; set; }  
 
     }
 }

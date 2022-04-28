@@ -10,7 +10,6 @@ namespace Golf_Game
         private readonly GolferRepo _golferRepo = new GolferRepo();
         private readonly GolfCourseRepo _courseRepo = new GolfCourseRepo();
         private readonly GolfClubsRepo _clubRepo = new GolfClubsRepo();
-        private readonly GolfCourseRepo _holeRepo = new GolfCourseRepo();
 
         public void Run()
         {
@@ -229,12 +228,20 @@ namespace Golf_Game
             foreach (var hole in course.HoleList)
             {
                 PlayHole2(player,hole);
+                CurrentScore(course);
             }
         }
+
+        private void CurrentScore(GolfCourse course)
+        {
+            Console.WriteLine($"Overall Score: {course.ScoreCard}");
+        }
+
         private void PlayHole2(Player player, Hole hole)
         {
             Random random = new Random();
             ViewHoleDetails(hole);
+            Console.ReadKey();
             int distHit = 0;
             int stroke = 0;
             int distRemaining = 260;
@@ -243,8 +250,8 @@ namespace Golf_Game
             while (distRemaining != 0)
             {
                 Console.Clear();
-                Console.WriteLine($"Distance Remaining:{distRemaining}");
-                Console.WriteLine($"Stroke: {stroke}");
+                Console.WriteLine($"Distance Remaining:{Math.Abs(distRemaining)}");
+                Console.WriteLine($"Stroke: {hole.Strokes}");
                 Console.Write("| Enter Club Choice | or | Look in your (B)ag |");
                 string userInput = Console.ReadLine().ToLower();
                 if (userInput == "b")
@@ -266,6 +273,8 @@ namespace Golf_Game
                         {
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
+                            hole.Strokes++;
+                            Console.ReadKey();
                             Putting(player, hole);
                         }
                         else
@@ -274,7 +283,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                     else
@@ -290,7 +299,7 @@ namespace Golf_Game
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                 }
                 else if (userInput == "3")
@@ -303,12 +312,12 @@ namespace Golf_Game
                     int distRemaining1 = distRemaining - distHit1;
                     if (distHit1 > distRemaining)
                     {
-                        int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                        int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                     else
                     {
@@ -317,6 +326,7 @@ namespace Golf_Game
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                             Console.ReadKey();
+                            hole.Strokes++;
                             Putting(player, hole);
                             distRemaining = 0;
                         }
@@ -326,7 +336,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                 }
@@ -340,12 +350,12 @@ namespace Golf_Game
                     int distRemaining1 = distRemaining - distHit1;
                     if (distHit1 > distRemaining)
                     {
-                        int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                        int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                     else
                     {
@@ -354,6 +364,7 @@ namespace Golf_Game
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                             Console.ReadKey();
+                            hole.Strokes++;
                             Putting(player, hole);
                             distRemaining = 0;
                         }
@@ -363,7 +374,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                 }
@@ -377,12 +388,12 @@ namespace Golf_Game
                     int distRemaining1 = distRemaining - distHit1;
                     if (distHit1 > distRemaining)
                     {
-                        int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                        int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                     else
                     {
@@ -391,6 +402,7 @@ namespace Golf_Game
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                             Console.ReadKey();
+                            hole.Strokes++;
                             Putting(player, hole);
                             distRemaining = 0;
                         }
@@ -400,7 +412,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                 }
@@ -414,12 +426,12 @@ namespace Golf_Game
                     int distRemaining1 = distRemaining - distHit1;
                     if (distHit1 > distRemaining)
                     {
-                        int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                        int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                     else
                     {
@@ -428,6 +440,7 @@ namespace Golf_Game
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                             Console.ReadKey();
+                            hole.Strokes++;
                             Putting(player, hole);
                             distRemaining = 0;
                         }
@@ -437,7 +450,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                 }
@@ -451,12 +464,12 @@ namespace Golf_Game
                     int distRemaining1 = distRemaining - distHit1;
                     if (distHit1 > distRemaining)
                     {
-                        int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                        int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                     else
                     {
@@ -465,6 +478,7 @@ namespace Golf_Game
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                             Console.ReadKey();
+                            hole.Strokes++;
                             Putting(player, hole);
                             distRemaining = 0;
                         }
@@ -474,7 +488,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                 }
@@ -488,12 +502,12 @@ namespace Golf_Game
                     int distRemaining1 = distRemaining - distHit1;
                     if (distHit1 > distRemaining)
                     {
-                        int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                        int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                     else
                     {
@@ -502,6 +516,7 @@ namespace Golf_Game
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                             Console.ReadKey();
+                            hole.Strokes++;
                             Putting(player, hole);
                             distRemaining = 0;
                         }
@@ -511,7 +526,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                 }
@@ -525,12 +540,12 @@ namespace Golf_Game
                     int distRemaining1 = distRemaining - distHit1;
                     if (distHit1 > distRemaining)
                     {
-                        int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                        int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                     else
                     {
@@ -539,6 +554,7 @@ namespace Golf_Game
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                             Console.ReadKey();
+                            hole.Strokes++;
                             Putting(player, hole);
                             distRemaining = 0;
                         }
@@ -548,7 +564,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                 }
@@ -562,12 +578,12 @@ namespace Golf_Game
                     int distRemaining1 = distRemaining - distHit1;
                     if (distHit1 > distRemaining)
                     {
-                        int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                        int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                         Console.ReadKey();
                         distHit += distHit1;
                         distRemaining = distRemaining1;
-                        stroke++;
+                        hole.Strokes++;
                     }
                     else
                     {
@@ -576,6 +592,7 @@ namespace Golf_Game
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                             Console.ReadKey();
+                            hole.Strokes++;
                             Putting(player, hole);
                             distRemaining = 0;
                         }
@@ -585,7 +602,7 @@ namespace Golf_Game
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                     }
                 }
@@ -603,14 +620,14 @@ namespace Golf_Game
                         int clubPower = club.Distance;
                         int distHit1 = quality + clubPower + strength;
                         int distRemaining1 = distRemaining - distHit1;
-                        if (distHit1 > distRemaining)
+                        if (distHit1 > distRemaining + 11)
                         {
-                            int distanceOver = Math.Abs(distRemaining1 - distHit1);
+                            int distanceOver = Math.Abs(distRemaining1);
                             Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
                             Console.ReadKey();
                             distHit += distHit1;
                             distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
                         }
                         else
                         {
@@ -619,6 +636,7 @@ namespace Golf_Game
                                 hole.DistanceRemaining = distRemaining1;
                                 Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
                                 Console.ReadKey();
+                                hole.Strokes++;
                                 Putting(player, hole);
                                 distRemaining = 0;
                             }
@@ -628,43 +646,55 @@ namespace Golf_Game
                                 Console.ReadKey();
                                 distHit += distHit1;
                                 distRemaining = distRemaining1;
-                                stroke++;
+                                hole.Strokes++;
                             }
                         }
                     }
                     else if(userInput1 == 2)
                     {
                         GolfClub club = _clubRepo.GetClubByName("sand wedge");
-                        int chipPower = club.Distance / 8;
-                        int distHit1 = chipPower;
-                        int distRemaining1 = distRemaining - distHit1;
-                        if (distHit1 > distRemaining)
+                        int chipQuality = player.Accuracy + random.Next(1, 60);
+                        if (chipQuality >= 80)
                         {
-                            int distanceOver = Math.Abs(distRemaining1 - distHit1);
-                            Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
+                            Console.WriteLine($"What a pure shot! Hitting the green rolling up close to the pin.");
                             Console.ReadKey();
-                            distHit += distHit1;
-                            distRemaining = distRemaining1;
-                            stroke++;
+                            hole.Strokes++;
+                            Putting(player, hole);
+                            distRemaining = 0;
+
+                            
+                        }
+                        else if (chipQuality < 80 && chipQuality >60)
+                        {
+                            Console.WriteLine("That was a quality chip. Not exactly what you hoped for but cant be mad.");
+                            Console.ReadKey();
+                            hole.Strokes++;
+                            Putting(player, hole);
+                            distRemaining = 0;
+                            
                         }
                         else
                         {
+                            int chance = random.Next(1, 10);
+                            int distRemaining1 = distRemaining - chance;
                             if (distRemaining1 <= 10)
                             {
-                                Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
-                                Console.ReadKey();
+                                Console.WriteLine("Successful chip! It rolls up on to the green. Time to get the putter!");
+                                hole.Strokes++;
                                 Putting(player, hole);
                                 distRemaining = 0;
+                                
                             }
                             else
                             {
-                                Console.WriteLine($"Good shot {distHit1} yards down the middle of the fairway. You have {distRemaining1} left to the pin.");
+                                Console.WriteLine($"Well unfortunately that didnt go as planned. You completely duffed that. Luckily it still went {chance} yards. ");
                                 Console.ReadKey();
-                                distHit += distHit1;
+                                distHit += chance;
                                 distRemaining = distRemaining1;
-                                stroke++;
+                                hole.Strokes++;
                             }
                         }
+                        
                     }
                     else
                     {
@@ -680,6 +710,27 @@ namespace Golf_Game
                 }
                 
             }
+            Console.WriteLine($"-----------Score on Hole {hole.Number}-------------------");
+            Console.WriteLine($"Strokes:{hole.Strokes}");
+            if(hole.Strokes == hole.Par)
+            {
+                Console.WriteLine("Good Par. Stay consistent.");
+            }
+            else if(hole.Strokes == hole.Par -1)
+            {
+                Console.WriteLine("Nice Birdie! Keep it up");
+                player.Accuracy++;
+                player.Strength++;
+            }
+            else if(hole.Strokes == hole.Par - 2)
+            {
+                Console.WriteLine("Wow what an amazing EAGLE! You are a legit beast!");
+                player.Strength++;
+                player.Strength++;
+                player.Accuracy++;
+                player.Accuracy++;
+            }
+            Console.Clear();
 
         }
 
@@ -691,8 +742,6 @@ namespace Golf_Game
                 Console.WriteLine("You tap in after a great shot on the green");
                 Console.ReadKey();
                 hole.Strokes++;
-                
-
             }
             else if (hole.DistanceRemaining <= 4)
             {
@@ -700,7 +749,8 @@ namespace Golf_Game
                 Console.WriteLine("You give it your best effort but you still 2 putt.");
                 Console.ReadKey();
                 hole.Strokes++;
-               
+                hole.Strokes++;
+
             }
         }
 
@@ -801,9 +851,79 @@ namespace Golf_Game
             Hole hole = new Hole();
             hole.Number = 1;
             hole.Par = 4;
-            hole.Distance = 260;
+            hole.Distance = 280;
             _courseRepo.AddHoleToDatabase(hole);
             _courseRepo.AssignHole(1, hole);
+
+            Hole hole2 = new Hole();
+            hole2.Number = 2;
+            hole2.Par = 4;
+            hole2.Distance = 340;
+            _courseRepo.AddHoleToDatabase(hole2);
+            _courseRepo.AssignHole(1, hole2);
+
+            Hole hole3 = new Hole();
+            hole3.Number = 3;
+            hole3.Par = 3;
+            hole3.Distance = 187;
+            _courseRepo.AddHoleToDatabase(hole3);
+            _courseRepo.AssignHole(1, hole3);
+
+            Hole hole4 = new Hole();
+            hole4.Number = 4;
+            hole4.Par = 4;
+            hole4.Distance = 425;
+            _courseRepo.AddHoleToDatabase(hole4);
+            _courseRepo.AssignHole(1, hole4);
+
+            Hole hole5 = new Hole();
+            hole5.Number = 5;
+            hole5.Par = 5;
+            hole5.Distance = 590;
+            _courseRepo.AddHoleToDatabase(hole5);
+            _courseRepo.AssignHole(1, hole5);
+
+            Hole hole6 = new Hole();
+            hole6.Number = 6;
+            hole6.Par = 4;
+            hole6.Distance = 370;
+            _courseRepo.AddHoleToDatabase(hole6);
+            _courseRepo.AssignHole(1, hole6);
+
+            Hole hole7 = new Hole();
+            hole7.Number = 7;
+            hole7.Par = 3;
+            hole7.Distance = 160;
+            _courseRepo.AddHoleToDatabase(hole7);
+            _courseRepo.AssignHole(1, hole7);
+
+            Hole hole8 = new Hole();
+            hole8.Number = 8;
+            hole8.Par = 5;
+            hole8.Distance = 460;
+            _courseRepo.AddHoleToDatabase(hole8);
+            _courseRepo.AssignHole(1, hole8);
+
+            Hole hole9 = new Hole();
+            hole9.Number = 9;
+            hole9.Par = 3;
+            hole9.Distance = 146;
+            _courseRepo.AddHoleToDatabase(hole9);
+            _courseRepo.AssignHole(1, hole9);
+
+            Hole hole10 = new Hole();
+            hole10.Number = 10;
+            hole10.Par = 4;
+            hole10.Distance = 385;
+            _courseRepo.AddHoleToDatabase(hole10);
+            _courseRepo.AssignHole(1, hole10);
+
+            Hole hole11 = new Hole();
+            hole11.Number = 11;
+            hole11.Par = 4;
+            hole11.Distance = 410;
+            _courseRepo.AddHoleToDatabase(hole11);
+            _courseRepo.AssignHole(1, hole11);
 
             Player player = new Player();
             player.Id = 1;

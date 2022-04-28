@@ -27,6 +27,18 @@ namespace Repositories
         public List<Hole> HoleList { get; set; } = new List<Hole>();
         public int TotalDistance { get; set; }
         public int ParTotal { get; set;}
+        public int ScoreCard
+        {
+            get
+            {
+                int currentScore = 0;
+                foreach (var hole in HoleList)
+                {
+                    currentScore += hole.Strokes;
+                }
+                return currentScore;
+            }
+        }
 
     }
 }
