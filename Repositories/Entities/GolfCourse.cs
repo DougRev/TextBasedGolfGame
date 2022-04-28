@@ -32,11 +32,24 @@ namespace Repositories
             get
             {
                 int currentScore = 0;
+                int currentPar = 0;
+                int calcScore = 0;
                 foreach (var hole in HoleList)
                 {
-                    currentScore += hole.Strokes;
+                    if (hole.Strokes == 0)
+                    {
+                        HoleList.Skip(1);
+                    }
+                    else
+                    {
+                        currentScore += hole.Strokes;
+                        currentPar += hole.Par;
+                        calcScore = currentScore - currentPar;
+
+                    }
+
                 }
-                return currentScore;
+                return calcScore;
             }
         }
 

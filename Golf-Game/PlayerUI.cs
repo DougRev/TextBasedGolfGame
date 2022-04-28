@@ -269,7 +269,7 @@ namespace Golf_Game
                         int clubPower = club.Distance;
                         int distHit1 = quality + clubPower + strength;
                         int distRemaining1 = distRemaining - distHit1;
-                        if (distRemaining1 <= 10)
+                        if (distHit1 > distRemaining + 11)
                         {
                             hole.DistanceRemaining = distRemaining1;
                             Console.WriteLine($"What a pure shot {distHit1} yards. Hitting the green.");
@@ -310,7 +310,7 @@ namespace Golf_Game
                     int clubPower = club.Distance;
                     int distHit1 = quality + clubPower + strength;
                     int distRemaining1 = distRemaining - distHit1;
-                    if (distHit1 > distRemaining)
+                    if (distHit1 > distRemaining + 11)
                     {
                         int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
@@ -348,7 +348,7 @@ namespace Golf_Game
                     int clubPower = club.Distance;
                     int distHit1 = quality + clubPower + strength;
                     int distRemaining1 = distRemaining - distHit1;
-                    if (distHit1 > distRemaining)
+                    if (distHit1 > distRemaining + 11)
                     {
                         int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
@@ -386,7 +386,7 @@ namespace Golf_Game
                     int clubPower = club.Distance;
                     int distHit1 = quality + clubPower + strength;
                     int distRemaining1 = distRemaining - distHit1;
-                    if (distHit1 > distRemaining)
+                    if (distHit1 > distRemaining + 11)
                     {
                         int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
@@ -424,7 +424,7 @@ namespace Golf_Game
                     int clubPower = club.Distance;
                     int distHit1 = quality + clubPower + strength;
                     int distRemaining1 = distRemaining - distHit1;
-                    if (distHit1 > distRemaining)
+                    if (distHit1 > distRemaining + 11)
                     {
                         int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
@@ -462,7 +462,7 @@ namespace Golf_Game
                     int clubPower = club.Distance;
                     int distHit1 = quality + clubPower + strength;
                     int distRemaining1 = distRemaining - distHit1;
-                    if (distHit1 > distRemaining)
+                    if (distHit1 > distRemaining + 11)
                     {
                         int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
@@ -500,7 +500,7 @@ namespace Golf_Game
                     int clubPower = club.Distance;
                     int distHit1 = quality + clubPower + strength;
                     int distRemaining1 = distRemaining - distHit1;
-                    if (distHit1 > distRemaining)
+                    if (distHit1 > distRemaining + 11)
                     {
                         int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
@@ -538,7 +538,7 @@ namespace Golf_Game
                     int clubPower = club.Distance;
                     int distHit1 = quality + clubPower + strength;
                     int distRemaining1 = distRemaining - distHit1;
-                    if (distHit1 > distRemaining)
+                    if (distHit1 > distRemaining + 11)
                     {
                         int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
@@ -576,7 +576,7 @@ namespace Golf_Game
                     int clubPower = club.Distance;
                     int distHit1 = quality + clubPower + strength;
                     int distRemaining1 = distRemaining - distHit1;
-                    if (distHit1 > distRemaining)
+                    if (distHit1 > distRemaining + 11)
                     {
                         int distanceOver = Math.Abs(distRemaining1);
                         Console.WriteLine($"You soar your over the green {distHit1} yards. You have {distanceOver} yards left to the pin. ");
@@ -730,6 +730,7 @@ namespace Golf_Game
                 player.Accuracy++;
                 player.Accuracy++;
             }
+            Console.ReadKey();
             Console.Clear();
 
         }
