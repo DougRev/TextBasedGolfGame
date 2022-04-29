@@ -228,18 +228,36 @@ namespace Golf_Game
             foreach (var hole in course.HoleList)
             {
                 PlayHole2(player,hole);
-                ScoreCard(course,player);
+                if (hole.Number < 10)
+                {
+                    ScoreCardFront9(course, player);
+                }    
+                else
+                {
+                    ScoreCardBack9(course, player);
+                }
+                
             }
         }
 
-        private void ScoreCard(GolfCourse course, Player player)
+        private void ScoreCardFront9(GolfCourse course, Player player)
         {
             Console.WriteLine($"Overall Score: {course.ScoreCard}");
             Console.WriteLine($"-----------------{course.CourseName}------------------------------");
             Console.WriteLine($"Hole  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | ");
-            Console.WriteLine($"Par   | {course.HoleList[0].Par} | {course.HoleList[1].Par} | {course.HoleList[2].Par} | {course.HoleList[3].Par} |");
+            Console.WriteLine($"Par   | {course.HoleList[0].Par} | {course.HoleList[1].Par} | {course.HoleList[2].Par} | {course.HoleList[3].Par} | {course.HoleList[4].Par} | {course.HoleList[5].Par} | {course.HoleList[6].Par} | {course.HoleList[7].Par} | {course.HoleList[8].Par} |   ");
             Console.WriteLine($"-------------------------------------------------------------------");
-            Console.WriteLine($"Score | {course.HoleList[0].Strokes} | {course.HoleList[1].Strokes} | {course.HoleList[2].Strokes} | {course.HoleList[3].Strokes} | ");
+            Console.WriteLine($"Score | {course.HoleList[0].Strokes} | {course.HoleList[1].Strokes} | {course.HoleList[2].Strokes} | {course.HoleList[3].Strokes} | {course.HoleList[4].Strokes} | {course.HoleList[5].Strokes} | {course.HoleList[6].Strokes} | {course.HoleList[7].Strokes} | {course.HoleList[8].Strokes} | ");
+            Console.ReadKey();
+        }
+        private void ScoreCardBack9(GolfCourse course, Player player)
+        {
+            Console.WriteLine($"Overall Score: {course.ScoreCard}");
+            Console.WriteLine($"-----------------{course.CourseName}------------------------------");
+            Console.WriteLine($"Hole  | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | ");
+            Console.WriteLine($"Par   | {course.HoleList[9].Par} | {course.HoleList[10].Par} | {course.HoleList[11].Par} | {course.HoleList[12].Par} | {course.HoleList[13].Par} | {course.HoleList[114].Par} | {course.HoleList[15].Par} | {course.HoleList[16].Par} | {course.HoleList[17].Par} |  Par Total: {course.ParTotal} | Current Score: {course.ScoreCard} ");
+            Console.WriteLine($"-------------------------------------------------------------------");
+            Console.WriteLine($"Score | {course.HoleList[9].Strokes} | {course.HoleList[10].Strokes} | {course.HoleList[11].Strokes} | {course.HoleList[12].Strokes} | {course.HoleList[13].Strokes} | {course.HoleList[14].Strokes} | {course.HoleList[15].Strokes} | {course.HoleList[16].Strokes} | {course.HoleList[17].Strokes} | Total{course} ");
             Console.ReadKey();
         }
 
@@ -798,8 +816,6 @@ namespace Golf_Game
             GolfCourse coolLake = new GolfCourse();
             coolLake.Id = 1;
             coolLake.CourseName = "cool lake";
-            coolLake.TotalDistance = 2600;
-            coolLake.ParTotal = 72;
             _courseRepo.AddCourseToDatabase(coolLake);
 
             Hole hole = new Hole();
@@ -830,7 +846,7 @@ namespace Golf_Game
             _courseRepo.AddHoleToDatabase(hole4);
             _courseRepo.AssignHole(1, hole4);
 
-            /*Hole hole5 = new Hole();
+            Hole hole5 = new Hole();
             hole5.Number = 5;
             hole5.Par = 5;
             hole5.Distance = 590;
@@ -877,7 +893,56 @@ namespace Golf_Game
             hole11.Par = 4;
             hole11.Distance = 410;
             _courseRepo.AddHoleToDatabase(hole11);
-            _courseRepo.AssignHole(1, hole11);*/
+            _courseRepo.AssignHole(1, hole11);
+
+            Hole hole12 = new Hole();
+            hole12.Number = 12;
+            hole12.Par = 3;
+            hole12.Distance = 170;
+            _courseRepo.AddHoleToDatabase(hole12);
+            _courseRepo.AssignHole(1, hole12);
+
+            Hole hole13 = new Hole();
+            hole13.Number = 13;
+            hole13.Par = 4;
+            hole13.Distance = 375;
+            _courseRepo.AddHoleToDatabase(hole13);
+            _courseRepo.AssignHole(1, hole13);
+
+            Hole hole14 = new Hole();
+            hole14.Number = 14;
+            hole14.Par = 4;
+            hole14.Distance = 360;
+            _courseRepo.AddHoleToDatabase(hole14);
+            _courseRepo.AssignHole(1, hole14);
+
+            Hole hole15 = new Hole();
+            hole15.Number = 15;
+            hole15.Par = 4;
+            hole15.Distance = 320;
+            _courseRepo.AddHoleToDatabase(hole15);
+            _courseRepo.AssignHole(1, hole15);
+
+            Hole hole16 = new Hole();
+            hole16.Number = 16;
+            hole16.Par = 5;
+            hole16.Distance = 545;
+            _courseRepo.AddHoleToDatabase(hole16);
+            _courseRepo.AssignHole(1, hole16);
+
+            Hole hole17 = new Hole();
+            hole17.Number = 17;
+            hole17.Par = 4;
+            hole17.Distance = 300;
+            _courseRepo.AddHoleToDatabase(hole17);
+            _courseRepo.AssignHole(1, hole17);
+
+            Hole hole18 = new Hole();
+            hole18.Number = 18;
+            hole18.Par = 3;
+            hole18.Distance = 185;
+            _courseRepo.AddHoleToDatabase(hole18);
+            _courseRepo.AssignHole(1, hole18);
 
             Player player = new Player();
             player.Id = 1;

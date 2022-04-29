@@ -14,19 +14,51 @@ namespace Repositories
 
         }
 
-        public GolfCourse(int id, string courseName, List<Hole> holeList, int totalDist = 0, int parTotal = 0)
+        public GolfCourse(int id, string courseName, List<Hole> holeList)
         {
             Id = id;
             CourseName = courseName;
             HoleList = holeList;
-            TotalDistance = totalDist;
-            ParTotal = parTotal;
         }
         public int Id { get; set; }
         public string CourseName { get; set; }
         public List<Hole> HoleList { get; set; } = new List<Hole>();
-        public int TotalDistance { get; set; }
-        public int ParTotal { get; set;}
+        public int TotalDistance
+        {
+            get
+            {
+                int totalDist = 0;
+                foreach (var hole in HoleList)
+                {
+                    totalDist += hole.Distance;
+                }
+                return totalDist;
+            }
+        }
+        public int TotalStrokes
+        {
+            get
+            {
+                int totalStrokes = 0;
+                foreach (var hole in HoleList)
+                {
+                    totalStrokes += hole.Strokes;
+                }
+                return totalStrokes;
+            }
+        }
+        public int ParTotal
+        {
+            get
+            {
+                int total = 0;
+                foreach (var hole in HoleList)
+                {
+                    total += hole.Par;
+                }
+                return total;
+            }
+        }
         public int ScoreCard
         {
             get
