@@ -228,13 +228,19 @@ namespace Golf_Game
             foreach (var hole in course.HoleList)
             {
                 PlayHole2(player,hole);
-                CurrentScore(course);
+                ScoreCard(course,player);
             }
         }
 
-        private void CurrentScore(GolfCourse course)
+        private void ScoreCard(GolfCourse course, Player player)
         {
             Console.WriteLine($"Overall Score: {course.ScoreCard}");
+            Console.WriteLine($"-----------------{course.CourseName}------------------------------");
+            Console.WriteLine($"Hole  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | ");
+            Console.WriteLine($"Par   | {course.HoleList[0].Par} | {course.HoleList[1].Par} | {course.HoleList[2].Par} | {course.HoleList[3].Par} |");
+            Console.WriteLine($"-------------------------------------------------------------------");
+            Console.WriteLine($"Score | {course.HoleList[0].Strokes} | {course.HoleList[1].Strokes} | {course.HoleList[2].Strokes} | {course.HoleList[3].Strokes} | ");
+            Console.ReadKey();
         }
 
         private void PlayHole2(Player player, Hole hole)
@@ -725,10 +731,9 @@ namespace Golf_Game
             else if(hole.Strokes == hole.Par - 2)
             {
                 Console.WriteLine("Wow what an amazing EAGLE! You are a legit beast!");
-                player.Strength++;
-                player.Strength++;
-                player.Accuracy++;
-                player.Accuracy++;
+                player.Strength += 2;
+                player.Accuracy += 2;
+                
             }
             Console.ReadKey();
             Console.Clear();
@@ -775,7 +780,7 @@ namespace Golf_Game
         {
             Console.WriteLine($"|  Hole Number: {hole.Number}   |");
             Console.WriteLine($"|     Distance: {hole.Distance} |");
-            Console.WriteLine($"|          Par: {hole.Par}    |");
+            Console.WriteLine($"|          Par: {hole.Par}   |");
         }
 
         private void ViewCourseDetails(GolfCourse course)
@@ -787,58 +792,6 @@ namespace Golf_Game
             Console.WriteLine($"Distance: {course.TotalDistance}");
         }
 
-        public int GoodShotMid(Player player, Hole hole,string name)
-        {
-            Random random = new Random();
-            GolfClub club = _clubRepo.GetClubByName(name);
-            int quality = random.Next(5, 10) + player.Strength;
-            int strength = player.Strength;
-            int clubPower = club.Distance;
-            int distanceHit = quality + clubPower + strength;
-            int distRemaining = hole.Distance - distanceHit;
-            Console.WriteLine($"Good shot {distanceHit} yards down the middle of the fairway. You have {distRemaining} left to the pin.");
-            return distRemaining;
-        }
-
-        public void GreatChipShot(Player player, Hole hole, string name)
-        {
-            Random random = new Random();
-            GolfClub club = _clubRepo.GetClubByName(name);
-            int quality = random.Next(5, 10) + player.Strength;
-            int strength = player.Strength;
-            int clubPower = club.Distance;
-            int distanceHit = quality + clubPower + strength;
-            int distance = hole.Distance;
-            distance -= distanceHit;
-            Console.WriteLine($"Good shot {distanceHit} yards down the middle of the fairway. You have {distance} left to the pin.");
-        }
-
-        public void TestGolfShot(Player player, Hole hole, string name)
-        {
-            Random random = new Random();
-            GolfClub club = _clubRepo.GetClubByName("5 iron");
-            int quality = random.Next(5, 10) + player.Strength;
-            int strength = player.Strength;
-            int clubPower = club.Distance;
-            int distHit1 = quality + clubPower + strength;
-            int distRemaining1 = hole.Distance - distHit1;
-            Console.WriteLine($"Good shot {distHit1} yards down the middle of the fairway. You have {distRemaining1} left to the pin.");
-            
-        }
-
-        private int BadDriverUsage(Player player, Hole hole, string name)
-        {
-            Random random = new Random();
-            GolfClub club = _clubRepo.GetClubByName(name);
-            int quality = random.Next(10, 40) + player.Strength;
-            int strength = player.Strength;
-            int clubPower = club.Distance;
-            int distanceHit = clubPower - quality + strength;
-            int distRemaining = hole.Distance - distanceHit;
-            Console.WriteLine($"You boldly step up to hit a driver off the deck.");
-            Console.WriteLine($"After making contact its not exactly how you intended it....but at least you tried. You have {distRemaining} left to the pin.");
-            return distRemaining;
-        }
 
         private void SeedContent()
         {
@@ -877,7 +830,7 @@ namespace Golf_Game
             _courseRepo.AddHoleToDatabase(hole4);
             _courseRepo.AssignHole(1, hole4);
 
-            Hole hole5 = new Hole();
+            /*Hole hole5 = new Hole();
             hole5.Number = 5;
             hole5.Par = 5;
             hole5.Distance = 590;
@@ -924,7 +877,7 @@ namespace Golf_Game
             hole11.Par = 4;
             hole11.Distance = 410;
             _courseRepo.AddHoleToDatabase(hole11);
-            _courseRepo.AssignHole(1, hole11);
+            _courseRepo.AssignHole(1, hole11);*/
 
             Player player = new Player();
             player.Id = 1;
