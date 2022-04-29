@@ -255,9 +255,9 @@ namespace Golf_Game
             Console.WriteLine($"Overall Score: {course.ScoreCard}");
             Console.WriteLine($"-----------------{course.CourseName}------------------------------");
             Console.WriteLine($"Hole  | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | ");
-            Console.WriteLine($"Par   | {course.HoleList[9].Par} | {course.HoleList[10].Par} | {course.HoleList[11].Par} | {course.HoleList[12].Par} | {course.HoleList[13].Par} | {course.HoleList[114].Par} | {course.HoleList[15].Par} | {course.HoleList[16].Par} | {course.HoleList[17].Par} |  Par Total: {course.ParTotal} | Current Score: {course.ScoreCard} ");
+            Console.WriteLine($"Par   | {course.HoleList[9].Par} | {course.HoleList[10].Par} | {course.HoleList[11].Par} | {course.HoleList[12].Par} | {course.HoleList[13].Par} | {course.HoleList[14].Par} | {course.HoleList[15].Par} | {course.HoleList[16].Par} | {course.HoleList[17].Par} |  Par Total: {course.ParTotal} | Current Score: {course.ScoreCard} ");
             Console.WriteLine($"-------------------------------------------------------------------");
-            Console.WriteLine($"Score | {course.HoleList[9].Strokes} | {course.HoleList[10].Strokes} | {course.HoleList[11].Strokes} | {course.HoleList[12].Strokes} | {course.HoleList[13].Strokes} | {course.HoleList[14].Strokes} | {course.HoleList[15].Strokes} | {course.HoleList[16].Strokes} | {course.HoleList[17].Strokes} | Total{course} ");
+            Console.WriteLine($"Score | {course.HoleList[9].Strokes} | {course.HoleList[10].Strokes} | {course.HoleList[11].Strokes} | {course.HoleList[12].Strokes} | {course.HoleList[13].Strokes} | {course.HoleList[14].Strokes} | {course.HoleList[15].Strokes} | {course.HoleList[16].Strokes} | {course.HoleList[17].Strokes} | Total{course.TotalStrokes} ");
             Console.ReadKey();
         }
 
